@@ -1,0 +1,46 @@
+<svg width="872" height="200" viewBox="0 0 872 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Green circular background with gradient -->
+  <defs>
+    <linearGradient id="circleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ADE80;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#22C55E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16A34A;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#84CC16;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#65A30D;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#circleGradient)" stroke="#16A34A" stroke-width="2"/>
+  
+  <!-- Curved leaf design -->
+  <path d="M50 100 Q80 60 100 100 Q120 140 150 100 Q120 70 100 100 Q80 130 50 100 Z" fill="url(#leafGradient)" opacity="0.8"/>
+  <path d="M70 85 Q85 70 100 85 Q115 100 100 115 Q85 100 70 85 Z" fill="#FFFFFF" opacity="0.3"/>
+  
+  <!-- Small decorative leaves -->
+  <circle cx="85" cy="75" r="3" fill="#FFFFFF" opacity="0.6"/>
+  <circle cx="115" cy="125" r="2" fill="#FFFFFF" opacity="0.4"/>
+  
+  <!-- Bio Nature text in circle -->
+  <text x="100" y="88" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">Bio</text>
+  <text x="100" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="14" font-weight="600">Nature</text>
+  
+  <!-- BioNature main text with gradient -->
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#84CC16;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <text x="240" y="85" fill="url(#textGradient)" font-family="Arial, sans-serif" font-size="56" font-weight="bold">BioNature</text>
+  
+  <!-- Tagline -->
+  <text x="240" y="125" fill="#6B7280" font-family="Arial, sans-serif" font-size="28" font-weight="500">Make crop easier</text>
+  
+  <!-- Copyright symbol -->
+  <circle cx="850" cy="30" r="12" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="850" y="35" text-anchor="middle" fill="#9CA3AF" font-family="Arial, sans-serif" font-size="14">©</text>
+</svg>

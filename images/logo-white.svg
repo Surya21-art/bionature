@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60" fill="none">
+  <!-- Brand Icon -->
+  <g transform="translate(6, 6)">
+    <!-- Outer Shield / Leaf Circle -->
+    <circle cx="24" cy="24" r="23" fill="rgba(255,255,255,0.08)" stroke="#8EBF45" stroke-width="2"/>
+    
+    <!-- Sprout / Bio Leaf Structure -->
+    <path d="M24 10 C16 10 12 18 12 28 C18 28 24 24 24 10 Z" fill="#8EBF45" />
+    <path d="M24 10 C32 10 36 18 36 28 C30 28 24 24 24 10 Z" fill="#C8DC82" />
+    <path d="M24 20 L24 38" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round"/>
+    <path d="M24 28 C28 26 31 23 33 21" stroke="#F5F8F1" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Microbe / Seed Dots -->
+    <circle cx="24" cy="38" r="2.5" fill="#8EBF45"/>
+    <circle cx="16" cy="18" r="1.5" fill="#C8DC82"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="66" y="32" font-family="'Poppins', sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">
+    Verdant<tspan fill="#8EBF45">Bio</tspan>
+  </text>
+  <text x="67" y="46" font-family="'Poppins', sans-serif" font-size="8.5" font-weight="600" fill="#C8DC82" letter-spacing="2.2">
+    AGRISCIENCE &bull; INNOVATION
+  </text>
+</svg>
