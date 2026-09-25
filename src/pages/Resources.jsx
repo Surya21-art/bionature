@@ -70,7 +70,7 @@ export const Resources = () => {
     toast.success(`Downloading ${title}... (Sample document)`);
   };
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="site-container py-8 sm:py-12 space-y-12">
       {/* Header Banner */}
       <div className="bg-[#183F26] text-white p-8 sm:p-10 border border-stone-800 space-y-4 max-w-4xl">
         <span className="text-[10px] font-mono tracking-widest uppercase text-[#E7EBDD] px-2 py-0.5 border border-white/20 bg-white/5 inline-block">

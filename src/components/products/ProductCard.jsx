@@ -1,12 +1,17 @@
 import React from "react";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
+import { CATEGORIES } from "@/data/bionature-data";
 
 export const ProductCard = ({ product, onEnquire }) => {
+  const matchedCat = CATEGORIES.find(
+    (c) => c.name.toLowerCase() === (product.category || "").toLowerCase()
+  );
   const primaryImage =
     product.primaryImage ||
     product.galleryImages?.[0] ||
     product.images?.[0] ||
+    matchedCat?.image ||
     "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80";
 
   const packText =
@@ -35,12 +40,12 @@ export const ProductCard = ({ product, onEnquire }) => {
   const productUrl = `/product/${product.slug || ""}`;
 
   return (
-    <div className="group bg-white border border-stone-200/90 hover:border-stone-400 transition-colors duration-200 flex flex-col justify-between">
-      <div>
+    <div className="product-card group bg-white border border-stone-200/90 hover:border-stone-400 transition-colors duration-200 flex flex-col justify-between min-w-0 w-full">
+      <div className="min-w-0 w-full">
         {/* Prominent, Clean Product Image (4:3 aspect ratio) - Clickable */}
         <Link
           href={productUrl}
-          className="block relative aspect-[4/3] bg-stone-100 overflow-hidden border-b border-stone-200/80 cursor-pointer"
+          className="product-image block relative aspect-[4/3] bg-stone-100 overflow-hidden border-b border-stone-200/80 cursor-pointer w-full max-w-full"
         >
           <img
             src={primaryImage}

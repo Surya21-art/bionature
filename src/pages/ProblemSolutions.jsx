@@ -7,11 +7,15 @@ import {
   Lightbulb,
 } from "lucide-react";
 import { PROBLEMS, PRODUCTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 export const ProblemSolutions = ({ onEnquire }) => {
   const [, params] = useRoute("/solutions/problems/:problem");
   const probParam = params?.problem?.toLowerCase() || "pest-management";
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
+
   const currentProblem =
     PROBLEMS.find(
       (pr) =>
@@ -19,14 +23,14 @@ export const ProblemSolutions = ({ onEnquire }) => {
         pr.name.toLowerCase().replace(/[^a-z0-9]+/g, "-") === probParam ||
         pr.category.toLowerCase().includes(probParam),
     ) || PROBLEMS[0];
-  const matchedProducts = PRODUCTS.filter(
+  const matchedProducts = allProducts.filter(
     (p) =>
-      p.targetProblems.some(
+      (p.targetProblems || []).some(
         (tp) => tp.toLowerCase() === currentProblem.name.toLowerCase(),
       ) || currentProblem.recommendedProducts?.includes(p.slug),
   );
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="site-container py-8 sm:py-12 space-y-12">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-slate-500">
         <Link

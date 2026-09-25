@@ -101,7 +101,7 @@ export const Distributor = () => {
     }
   };
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="site-container py-8 sm:py-12 space-y-12">
       {/* Hero Banner */}
       <div className="bg-[#183F26] text-white p-8 sm:p-12 border border-stone-800 space-y-3">
         <span className="inline-block text-[11px] font-mono tracking-[0.2em] uppercase text-[#E7EBDD] px-3 py-1 bg-white/10 border border-white/20">

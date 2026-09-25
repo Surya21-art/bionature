@@ -9,10 +9,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { PRODUCTS, CROPS, PROBLEMS, BLOG_POSTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 export const GlobalSearchDialog = ({ open, onOpenChange }) => {
   const [query, setQuery] = useState("");
   const [, setLocation] = useLocation();
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
+
   // Keyboard shortcut Ctrl+K / Cmd+K
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -26,13 +30,13 @@ export const GlobalSearchDialog = ({ open, onOpenChange }) => {
   }, [onOpenChange]);
   const q = query.trim().toLowerCase();
   const matchingProducts = q
-    ? PRODUCTS.filter(
+    ? allProducts.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
-          p.shortDescription.toLowerCase().includes(q) ||
-          p.suitableCrops.some((c) => c.toLowerCase().includes(q)) ||
-          p.targetProblems.some((pr) => pr.toLowerCase().includes(q)),
+          (p.name || "").toLowerCase().includes(q) ||
+          (p.category || "").toLowerCase().includes(q) ||
+          (p.shortDescription || p.description || "").toLowerCase().includes(q) ||
+          (p.suitableCrops || p.crops || []).some((c) => c.toLowerCase().includes(q)) ||
+          (p.targetProblems || []).some((pr) => pr.toLowerCase().includes(q)),
       ).slice(0, 5)
     : [];
   const matchingCrops = q

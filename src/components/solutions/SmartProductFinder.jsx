@@ -8,12 +8,15 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { CROPS, PROBLEMS, PRODUCTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { Button } from "@/components/ui/button";
 
 export const SmartProductFinder = ({ onEnquire }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedCrop, setSelectedCrop] = useState("");
   const [selectedProblem, setSelectedProblem] = useState("");
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
 
   const handleSelectCrop = (cropName) => {
     setSelectedCrop(cropName);
@@ -32,10 +35,11 @@ export const SmartProductFinder = ({ onEnquire }) => {
   };
 
   // Match products based on selected crop and problem
-  const recommendedProducts = PRODUCTS.filter((p) => {
-    const cropMatch = !selectedCrop || p.suitableCrops.includes(selectedCrop);
-    const problemMatch =
-      !selectedProblem || p.targetProblems.includes(selectedProblem);
+  const recommendedProducts = allProducts.filter((p) => {
+    const crops = p.suitableCrops || p.crops || [];
+    const problems = p.targetProblems || [];
+    const cropMatch = !selectedCrop || crops.some((c) => c.toLowerCase() === selectedCrop.toLowerCase());
+    const problemMatch = !selectedProblem || problems.some((pr) => pr.toLowerCase() === selectedProblem.toLowerCase());
     return cropMatch && problemMatch;
   });
 
@@ -43,11 +47,14 @@ export const SmartProductFinder = ({ onEnquire }) => {
   const finalProducts =
     recommendedProducts.length > 0
       ? recommendedProducts
-      : PRODUCTS.filter(
-          (p) =>
-            p.targetProblems.includes(selectedProblem) ||
-            p.suitableCrops.includes(selectedCrop),
-        ).slice(0, 3);
+      : allProducts.filter((p) => {
+          const crops = p.suitableCrops || p.crops || [];
+          const problems = p.targetProblems || [];
+          return (
+            problems.some((pr) => pr.toLowerCase() === selectedProblem.toLowerCase()) ||
+            crops.some((c) => c.toLowerCase() === selectedCrop.toLowerCase())
+          );
+        }).slice(0, 3);
 
   return (
     <div className="bg-[#183F26] text-white p-7 sm:p-12 border border-stone-800 space-y-8">

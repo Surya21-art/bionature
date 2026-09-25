@@ -6,7 +6,7 @@ export const Legal = () => {
   const [isTerms] = useRoute("/terms");
   const [isDisclaimer] = useRoute("/disclaimer");
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-10">
+    <div className="site-container max-w-4xl py-12 space-y-10">
       {/* Navigation tabs between legal docs */}
       <div className="flex items-center gap-3 border-b pb-4 text-xs font-semibold">
         <Link

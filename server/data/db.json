@@ -1,0 +1,782 @@
+{
+  "products": [
+    {
+      "id": "prod-1790342959309",
+      "published": true,
+      "featured": false,
+      "name": "z.scml lx;m cml/z",
+      "slug": "z-scml-lx-m-cml-z",
+      "category": "Bio Fertilizers",
+      "categorySlug": "bio-fertilizers",
+      "shortDescription": "qwef,gtr;logf,m",
+      "description": "qwef,gtr;logf,m",
+      "dosage": "54",
+      "applicationMethod": "Foliar Spray / Drip Irrigation / Seed Treatment",
+      "benefits": [
+        "Increases nutrient assimilation & root proliferation",
+        "Eco-friendly, chemical-free and 100% residue-free"
+      ],
+      "suitableCrops": [
+        "Tomato",
+        "Chilli",
+        "Paddy",
+        "Vegetables"
+      ],
+      "targetProblems": [
+        "Nutrient Deficiency",
+        "Soil Health"
+      ],
+      "packSizes": [
+        "500 ml",
+        "1 Liter",
+        "5 Liters"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "formulation": "Liquid Consortia",
+      "ingredients": "Active biological inoculants & consortia",
+      "documents": [
+        {
+          "name": "Product Brochure.pdf",
+          "type": "PDF",
+          "size": "1.2 MB"
+        }
+      ],
+      "crops": [
+        "Tomato",
+        "Chilli",
+        "Paddy",
+        "Vegetables"
+      ],
+      "createdAt": "2026-09-25T13:29:19.309Z",
+      "updatedAt": "2026-09-25T13:29:19.349Z"
+    },
+    {
+      "id": "prod-1790312823340",
+      "published": true,
+      "featured": false,
+      "name": "Bio-Phosphorus Mobilizer Special",
+      "slug": "bio-phosphorus-mobilizer-special",
+      "category": "Bio Fertilizers",
+      "categorySlug": "bio-fertilizers",
+      "shortDescription": "High potency PSB liquid for unlocking fixed soil phosphorus",
+      "description": "High potency PSB liquid for unlocking fixed soil phosphorus",
+      "dosage": "500 ml per acre",
+      "applicationMethod": "Foliar Spray / Drip Irrigation / Seed Treatment",
+      "benefits": [
+        "Increases nutrient assimilation & root proliferation",
+        "Eco-friendly, chemical-free and 100% residue-free"
+      ],
+      "suitableCrops": [
+        "Tomato",
+        "Chilli",
+        "Paddy",
+        "Vegetables"
+      ],
+      "targetProblems": [
+        "Nutrient Deficiency",
+        "Soil Health"
+      ],
+      "packSizes": [
+        "500 ml",
+        "1 Liter",
+        "5 Liters"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "formulation": "Liquid Consortia",
+      "ingredients": "Active biological inoculants & consortia",
+      "documents": [
+        {
+          "name": "Product Brochure.pdf",
+          "type": "PDF",
+          "size": "1.2 MB"
+        }
+      ],
+      "crops": [
+        "Tomato",
+        "Chilli",
+        "Paddy",
+        "Vegetables"
+      ],
+      "createdAt": "2026-09-25T05:07:03.340Z",
+      "updatedAt": "2026-09-25T05:07:03.350Z"
+    },
+    {
+      "id": "prod-1790312708519",
+      "published": true,
+      "featured": false,
+      "name": "Bio-Zinc Solubilizing Formulation",
+      "slug": "bio-zinc-solubilizing-formulation",
+      "category": "Bio Fertilizers",
+      "categorySlug": "bio-fertilizers",
+      "shortDescription": "Active zinc solubilizing bacteria for high-yield crops",
+      "description": "Active zinc solubilizing bacteria for high-yield crops",
+      "dosage": "1-2 Liters per acre",
+      "applicationMethod": "Foliar Spray / Drip Irrigation",
+      "benefits": [
+        "Increases nutrient assimilation",
+        "Eco-friendly and 100% residue-free"
+      ],
+      "suitableCrops": [
+        "Paddy",
+        "Wheat",
+        "Maize"
+      ],
+      "targetProblems": [
+        "Nutrient Deficiency",
+        "Soil Health"
+      ],
+      "packSizes": [
+        "500 ml",
+        "1 Liter",
+        "5 Liters"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+      "images": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+      ],
+      "createdAt": "2026-09-25T05:05:08.519Z",
+      "updatedAt": "2026-09-25T05:05:08.519Z"
+    },
+    {
+      "id": "prod-1",
+      "name": "Phytocil",
+      "slug": "phytocil",
+      "category": "Bio Fertilizers",
+      "categorySlug": "bio-fertilizers",
+      "formulation": "Liquid / Granular",
+      "packaging": "1 L • 5 L",
+      "packSizes": [
+        "1 L",
+        "5 L"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&auto=format&fit=crop&q=80"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&auto=format&fit=crop&q=80"
+      ],
+      "shortDescription": "Biological fertilizer formulation developed to support plant growth and soil health.",
+      "description": "Phytocil is a biological fertilizer formulation developed to support healthy crop growth and maintain soil fertility. Suitable for use across cereals, vegetables, and commercial field crops, it is applied during planting or early growth stages through soil drenching, drip irrigation, or seed treatment.",
+      "agronomicContext": {
+        "classification": "Bio-Fertilizer (Liquid / Granular)",
+        "purpose": "Supports vegetative growth and soil health",
+        "targetCrops": "Rice, Wheat, Vegetables",
+        "practice": "Soil drenching, drip fertigation, or seed treatment"
+      },
+      "benefits": [
+        "Supports healthy root and vegetative plant growth",
+        "Aids in nutrient availability in the root zone",
+        "Supports beneficial soil microbial activity",
+        "Suitable for field and horticultural crops"
+      ],
+      "crops": [
+        "Rice",
+        "Wheat",
+        "Vegetables"
+      ],
+      "suitableCrops": [
+        "Rice",
+        "Wheat",
+        "Vegetables",
+        "Cotton",
+        "Sugarcane",
+        "Tomato",
+        "Potato",
+        "Onion",
+        "Maize"
+      ],
+      "targetProblems": [
+        "Suboptimal plant growth",
+        "Poor nutrient uptake",
+        "Low soil organic activity"
+      ],
+      "application": [
+        {
+          "crop": "Rice / Paddy",
+          "method": "Seedling Root Dip / Drip",
+          "dosage": "250–500 ml / acre",
+          "timing": "At transplanting or first irrigation",
+          "frequency": "1–2 applications"
+        },
+        {
+          "crop": "Wheat & Cereals",
+          "method": "Soil application with compost",
+          "dosage": "500 ml / acre",
+          "timing": "Basal application or crown root stage",
+          "frequency": "1 application"
+        },
+        {
+          "crop": "Vegetables (Tomato, Chilli)",
+          "method": "Drip fertigation / Drenching",
+          "dosage": "2–3 ml / Litre of water",
+          "timing": "Active vegetative growth",
+          "frequency": "Every 15–20 days"
+        }
+      ],
+      "specifications": {
+        "formulation": "Liquid / Granular",
+        "composition": "Beneficial microbial consortium & natural carriers",
+        "packSizes": "1 L • 5 L",
+        "storage": "Store in a cool, dry place away from direct heat and sunlight",
+        "shelfLife": "24 months from date of manufacture",
+        "manufacturer": "BioNature India",
+        "registration": "Biological fertilizer formulation standards"
+      },
+      "quality": "Quality tested batch assay with verified viable cell count",
+      "relatedProducts": [
+        "biofert-g",
+        "energy-pro",
+        "grow-mag"
+      ],
+      "featured": true,
+      "published": true,
+      "createdAt": "2026-09-25T05:04:43.728Z"
+    },
+    {
+      "id": "prod-2",
+      "name": "Energy Pro",
+      "slug": "energy-pro",
+      "category": "Plant Growth Promoters",
+      "categorySlug": "plant-growth-promoters",
+      "formulation": "Liquid Foliar",
+      "packaging": "500 ml • 1 L",
+      "packSizes": [
+        "500 ml",
+        "1 L"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800&auto=format&fit=crop&q=80"
+      ],
+      "shortDescription": "Plant growth promoter for crop vigor during flowering and fruit setting.",
+      "description": "Energy Pro is a liquid foliar plant growth promoter formulated to support plant vigor during vegetative and reproductive stages. It is applied to crops during branching, pre-flowering, and fruit development to maintain crop vitality.",
+      "agronomicContext": {
+        "classification": "Plant Growth Promoter (Liquid Foliar)",
+        "purpose": "Supports plant vigor during flowering and fruit development",
+        "targetCrops": "Tomato, Chilli, Vegetables",
+        "practice": "Foliar spray during pre-flowering and fruit development"
+      },
+      "benefits": [
+        "Supports plant growth during vegetative and flowering stages",
+        "Helps maintain reproductive vigor and reduces flower drop",
+        "Enhances overall crop canopy development",
+        "Easy foliar application compatible with common spray schedules"
+      ],
+      "crops": [
+        "Tomato",
+        "Chilli",
+        "Vegetables"
+      ],
+      "suitableCrops": [
+        "Tomato",
+        "Chilli",
+        "Vegetables",
+        "Brinjal",
+        "Okra",
+        "Cucumber",
+        "Watermelon",
+        "Mango",
+        "Citrus"
+      ],
+      "targetProblems": [
+        "Slow crop growth",
+        "Poor flowering",
+        "Low fruit set"
+      ],
+      "application": [
+        {
+          "crop": "Tomato, Chilli & Brinjal",
+          "method": "Foliar Spray",
+          "dosage": "2–2.5 ml / Litre of water",
+          "timing": "Pre-flowering & fruit development",
+          "frequency": "2 applications (15 days apart)"
+        },
+        {
+          "crop": "Cotton & Pulses",
+          "method": "Foliar Spray",
+          "dosage": "250–300 ml / acre",
+          "timing": "Branching and boll development",
+          "frequency": "2 applications"
+        },
+        {
+          "crop": "Fruit Orchards (Mango, Citrus)",
+          "method": "Foliar Spray",
+          "dosage": "2.5 ml / Litre of water",
+          "timing": "New flush and fruit set",
+          "frequency": "2–3 applications"
+        }
+      ],
+      "specifications": {
+        "formulation": "Liquid Foliar",
+        "composition": "Plant extract bio-stimulants & organic cofactors",
+        "packSizes": "500 ml • 1 L",
+        "storage": "Store upright in original container below 35°C",
+        "shelfLife": "24 months from date of manufacture",
+        "manufacturer": "BioNature India",
+        "registration": "Commercial biological crop stimulant standards"
+      },
+      "quality": "Standardized biological extraction with stable active ingredient profile",
+      "relatedProducts": [
+        "phytocil",
+        "grow-mag",
+        "biofert-g"
+      ],
+      "featured": true,
+      "published": true,
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "prod-3",
+      "name": "Grow Mag",
+      "slug": "grow-mag",
+      "category": "Micronutrients",
+      "categorySlug": "micronutrients",
+      "formulation": "Water-Soluble Powder",
+      "packaging": "1 Kg • 5 Kg",
+      "packSizes": [
+        "1 Kg",
+        "5 Kg"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=800&auto=format&fit=crop&q=80"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=800&auto=format&fit=crop&q=80"
+      ],
+      "shortDescription": "Water-soluble magnesium formulation for correcting crop chlorosis.",
+      "description": "Grow Mag is a water-soluble agricultural magnesium formulation developed to address magnesium deficiency in commercial crops. Magnesium is an essential component of chlorophyll required for plant photosynthesis.",
+      "agronomicContext": {
+        "classification": "Micronutrient Fertilizer (Water-Soluble Powder)",
+        "purpose": "Corrects magnesium deficiency and supports chlorophyll synthesis",
+        "targetCrops": "Cotton, Tomato, Potato",
+        "practice": "Foliar spray or drip fertigation at onset of deficiency"
+      },
+      "benefits": [
+        "Corrects leaf chlorosis caused by magnesium deficiency",
+        "Supports chlorophyll synthesis and foliage greenness",
+        "Water-soluble formulation for rapid foliar uptake",
+        "Compatible with standard fertigation programs"
+      ],
+      "crops": [
+        "Cotton",
+        "Tomato",
+        "Potato"
+      ],
+      "suitableCrops": [
+        "Cotton",
+        "Tomato",
+        "Potato",
+        "Grape",
+        "Apple",
+        "Banana",
+        "Coconut",
+        "Groundnut"
+      ],
+      "targetProblems": [
+        "Yellowing leaves",
+        "Magnesium deficiency",
+        "Reduced leaf canopy"
+      ],
+      "application": [
+        {
+          "crop": "Cotton & Oilseeds",
+          "method": "Foliar Spray",
+          "dosage": "5 g / Litre of water (1 kg/acre)",
+          "timing": "At onset of deficiency or active leaf canopy",
+          "frequency": "1–2 sprays"
+        },
+        {
+          "crop": "Vegetables & Potatoes",
+          "method": "Foliar / Fertigation",
+          "dosage": "1–2 kg / acre",
+          "timing": "Vegetative growth and tuber bulking",
+          "frequency": "15 days interval"
+        },
+        {
+          "crop": "Grapes & Plantation Crops",
+          "method": "Foliar / Soil Drench",
+          "dosage": "5 g / Litre of water",
+          "timing": "Cane maturity and berry development",
+          "frequency": "As required based on field observation"
+        }
+      ],
+      "specifications": {
+        "formulation": "Water-Soluble Powder",
+        "composition": "Agricultural-grade Magnesium formulation",
+        "packSizes": "1 Kg • 5 Kg",
+        "storage": "Keep packaging sealed airtight in dry storage area",
+        "shelfLife": "36 months from date of manufacture",
+        "manufacturer": "BioNature India",
+        "registration": "Fertilizer (Inorganic / Micronutrient) standards"
+      },
+      "quality": "High-purity soluble mineral formulation free of harmful contaminants",
+      "relatedProducts": [
+        "agromag",
+        "energy-pro",
+        "phytocil"
+      ],
+      "featured": false,
+      "published": true,
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "prod-4",
+      "name": "AgroMag",
+      "slug": "agromag",
+      "category": "Micronutrients",
+      "categorySlug": "micronutrients",
+      "formulation": "Granular Carrier",
+      "packaging": "5 Kg • 25 Kg",
+      "packSizes": [
+        "5 Kg",
+        "25 Kg"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80"
+      ],
+      "shortDescription": "Granular magnesium soil amendment for balanced soil nutrient levels.",
+      "description": "AgroMag is a granular soil-amendment magnesium formulation designed to address soil magnesium depletion in intensive cropping systems. It is applied during basal soil preparation or early side-dressing.",
+      "agronomicContext": {
+        "classification": "Soil Amendment / Micronutrient (Granular)",
+        "purpose": "Replenishes soil magnesium levels during land preparation",
+        "targetCrops": "Sugarcane, Rice, Wheat",
+        "practice": "Soil broadcasting during basal application or earthing up"
+      },
+      "benefits": [
+        "Replenishes magnesium in intensively cropped soils",
+        "Supports balanced soil cation availability",
+        "Granular form for uniform field broadcasting",
+        "Suitable for long-duration field and plantation crops"
+      ],
+      "crops": [
+        "Sugarcane",
+        "Rice",
+        "Wheat"
+      ],
+      "suitableCrops": [
+        "Sugarcane",
+        "Rice",
+        "Wheat",
+        "Maize",
+        "Soybean",
+        "Sunflower",
+        "Cotton",
+        "Tea"
+      ],
+      "targetProblems": [
+        "Soil nutrient imbalance",
+        "Subsoil magnesium deficiency",
+        "Poor crop vigor"
+      ],
+      "application": [
+        {
+          "crop": "Sugarcane",
+          "method": "Soil Broadcasting",
+          "dosage": "25 kg / acre",
+          "timing": "Basal application at planting or earthing up",
+          "frequency": "1 application"
+        },
+        {
+          "crop": "Rice & Wheat",
+          "method": "Soil Broadcasting",
+          "dosage": "10–15 kg / acre",
+          "timing": "During last ploughing / basal application",
+          "frequency": "1 application"
+        },
+        {
+          "crop": "Maize & Cotton",
+          "method": "Band placement in root zone",
+          "dosage": "15–20 kg / acre",
+          "timing": "At sowing or 30 days after emergence",
+          "frequency": "1 application"
+        }
+      ],
+      "specifications": {
+        "formulation": "Granular Carrier",
+        "composition": "High-grade agricultural soil magnesium amendment",
+        "packSizes": "5 Kg • 25 Kg",
+        "storage": "Store stacked on wooden pallets in dry warehouse",
+        "shelfLife": "36 months from date of manufacture",
+        "manufacturer": "BioNature India",
+        "registration": "Soil amendment standard specifications"
+      },
+      "quality": "Granular integrity tested for even field dissemination",
+      "relatedProducts": [
+        "grow-mag",
+        "biofert-g",
+        "phytocil"
+      ],
+      "featured": false,
+      "published": true,
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "prod-5",
+      "name": "BioFert-G",
+      "slug": "biofert-g",
+      "category": "Bio Fertilizers",
+      "categorySlug": "bio-fertilizers",
+      "formulation": "Granular",
+      "packaging": "10 Kg • 25 Kg",
+      "packSizes": [
+        "10 Kg",
+        "25 Kg"
+      ],
+      "primaryImage": "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=80",
+      "galleryImages": [
+        "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&auto=format&fit=crop&q=80"
+      ],
+      "images": [
+        "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&auto=format&fit=crop&q=80"
+      ],
+      "shortDescription": "Granular bio-fertilizer on organic carrier base for soil enrichment.",
+      "description": "BioFert-G is a granular bio-fertilizer developed on an organic carrier base to introduce beneficial microbial cultures into cultivated soils during land preparation and basal fertilization.",
+      "agronomicContext": {
+        "classification": "Bio-Fertilizer (Granular Inoculant)",
+        "purpose": "Baseline soil biological enrichment and organic conditioning",
+        "targetCrops": "Rice, Wheat, Vegetables",
+        "practice": "Soil broadcasting before sowing or final field puddling"
+      },
+      "benefits": [
+        "Granular carrier for easy broadcast application",
+        "Supplies beneficial microbial cultures to the soil",
+        "Contributes organic matter to the root zone",
+        "Suitable for basal application across major field crops"
+      ],
+      "crops": [
+        "Rice",
+        "Wheat",
+        "Vegetables"
+      ],
+      "suitableCrops": [
+        "Rice",
+        "Wheat",
+        "Vegetables",
+        "Maize",
+        "Millets",
+        "Sugarcane",
+        "Cotton",
+        "Pulses"
+      ],
+      "targetProblems": [
+        "Low soil organic activity",
+        "Suboptimal soil fertility",
+        "Nutrient deficiency"
+      ],
+      "application": [
+        {
+          "crop": "Rice / Paddy",
+          "method": "Soil Broadcasting",
+          "dosage": "10–20 kg / acre",
+          "timing": "Basal dressing before final puddling",
+          "frequency": "1 application"
+        },
+        {
+          "crop": "Wheat & Maize",
+          "method": "Soil Broadcasting",
+          "dosage": "15–20 kg / acre",
+          "timing": "Basal application with sowing",
+          "frequency": "1 application"
+        },
+        {
+          "crop": "Vegetables & Pulses",
+          "method": "Soil Application / Furrow",
+          "dosage": "10–15 kg / acre",
+          "timing": "At land preparation or bed making",
+          "frequency": "1 application"
+        }
+      ],
+      "specifications": {
+        "formulation": "Granular",
+        "composition": "Microbial carrier inoculant with organic substrate",
+        "packSizes": "10 Kg • 25 Kg",
+        "storage": "Store in a shaded, well-ventilated dry place",
+        "shelfLife": "18 months from date of manufacture",
+        "manufacturer": "BioNature India",
+        "registration": "Biological fertilizer formulation guidelines"
+      },
+      "quality": "Organic carrier base with laboratory-verified viable microbial count",
+      "relatedProducts": [
+        "phytocil",
+        "agromag",
+        "energy-pro"
+      ],
+      "featured": true,
+      "published": true,
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    }
+  ],
+  "enquiries": [
+    {
+      "id": "enq-1",
+      "name": "Rajesh Patil",
+      "mobile": "9822012345",
+      "email": "rajesh.patil@example.com",
+      "state": "Maharashtra",
+      "district": "Solapur",
+      "crop": "Pomegranate",
+      "productName": "Bio-NPK Liquid Consortia",
+      "productSlug": "bio-npk-liquid-consortia",
+      "enquiryType": "Product Inquiry",
+      "message": "Need bulk pricing for 50 liters Bio-NPK for bacterial blight management and root boosting.",
+      "status": "new",
+      "createdAt": "2026-09-25T01:04:43.729Z"
+    },
+    {
+      "id": "enq-2",
+      "name": "Gurpreet Singh",
+      "mobile": "9814098765",
+      "email": "gurpreet@example.com",
+      "state": "Punjab",
+      "district": "Ludhiana",
+      "crop": "Wheat",
+      "productName": "Trichoderma Viride Bio-Fungicide",
+      "productSlug": "trichoderma-viride-bio-fungicide",
+      "enquiryType": "Technical Support",
+      "message": "Can Trichoderma be applied with irrigation water in standing wheat crop at first watering?",
+      "status": "contacted",
+      "createdAt": "2026-09-24T01:04:43.729Z"
+    }
+  ],
+  "farmerHelp": [
+    {
+      "id": "diag-1",
+      "referenceNumber": "BN-DIAG-4812",
+      "farmerName": "Balwinder Singh",
+      "mobile": "9876543210",
+      "email": "balwinder@example.com",
+      "state": "Punjab",
+      "district": "Bathinda",
+      "crop": "Cotton",
+      "cropAge": "45 Days",
+      "problemDescription": "Leaves turning pale yellow with dark curling at margins. Sucking insects visible under leaves.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?w=600&auto=format&fit=crop&q=80"
+      ],
+      "status": "in_review",
+      "expertNotes": "Symptoms indicate early whitefly feeding combined with minor Zinc deficiency. Recommended Neem Shield 10,000 PPM + Chelated Zinc foliar spray.",
+      "recommendedProducts": [
+        "neem-shield-bio-pesticide-10000-ppm",
+        "chelated-multi-micronutrient-liquid"
+      ],
+      "createdAt": "2026-09-24T17:04:43.729Z"
+    },
+    {
+      "id": "diag-2",
+      "referenceNumber": "BN-DIAG-9120",
+      "farmerName": "Narayana Swamy",
+      "mobile": "9443322110",
+      "state": "Karnataka",
+      "district": "Kolar",
+      "crop": "Tomato",
+      "cropAge": "30 Days (Flowering initiation)",
+      "problemDescription": "Sudden wilting of healthy plants in patches after heavy morning rain. Roots have dark collar rot.",
+      "imageUrls": [
+        "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=600&auto=format&fit=crop&q=80"
+      ],
+      "status": "responded",
+      "expertNotes": "Severe Phytophthora collar rot. Immediately drench surrounding beds with Trichoderma Viride and avoid standing water.",
+      "recommendedProducts": [
+        "trichoderma-viride-bio-fungicide"
+      ],
+      "createdAt": "2026-09-23T17:04:43.729Z"
+    }
+  ],
+  "distributors": [
+    {
+      "id": "dist-1",
+      "name": "Mahesh Agrotech",
+      "company": "Mahesh Agri Inputs Pvt Ltd",
+      "mobile": "9845012345",
+      "email": "mahesh.agri@example.com",
+      "state": "Maharashtra",
+      "district": "Nashik",
+      "currentBusiness": "Agricultural Retailer & Distributor",
+      "yearsInBusiness": "12 Years",
+      "interestedCategories": [
+        "Bio Fertilizers",
+        "Bio Fungicides",
+        "Seaweed Products"
+      ],
+      "message": "We have 150+ sub-dealer network across Nashik and Niphad grape and vegetable belts.",
+      "status": "new",
+      "createdAt": "2026-09-24T11:04:43.729Z"
+    }
+  ],
+  "admins": [
+    {
+      "id": "admin-1",
+      "name": "Chief Super Admin",
+      "email": "admin@bionature.in",
+      "password": "Admin@123",
+      "role": "super_admin",
+      "roleTitle": "Super Admin",
+      "status": "active",
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "admin-2",
+      "name": "Catalog Product Admin",
+      "email": "products@bionature.in",
+      "password": "Product@123",
+      "role": "product_admin",
+      "roleTitle": "Product Admin",
+      "status": "active",
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "admin-3",
+      "name": "Dr. Sharma (Agronomist)",
+      "email": "agronomy@bionature.in",
+      "password": "Agro@123",
+      "role": "agronomist",
+      "roleTitle": "Agronomist",
+      "status": "active",
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    },
+    {
+      "id": "admin-4",
+      "name": "Farmer Support Manager",
+      "email": "support@bionature.in",
+      "password": "Support@123",
+      "role": "support_manager",
+      "roleTitle": "Support Manager",
+      "status": "active",
+      "createdAt": "2026-09-25T05:04:43.729Z"
+    }
+  ]
+}

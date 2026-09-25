@@ -25,9 +25,12 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 import { SmartProductFinder } from "@/components/solutions/SmartProductFinder";
 import { EditorialHero } from "@/components/sections/EditorialHero";
+import { useBioNatureStore } from "@/services/store";
 
 export const Home = ({ onEnquire }) => {
-  const featuredProducts = PRODUCTS.slice(0, 4);
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
+  const featuredProducts = allProducts.slice(0, 4);
 
   return (
     <div className="space-y-16 sm:space-y-24 pb-16 bg-[#F7F6F1] text-[#242421]">
@@ -36,7 +39,7 @@ export const Home = ({ onEnquire }) => {
       <EditorialHero onEnquire={onEnquire} />
 
       {/* 2. THE BIONATURE MANIFESTO / FOUNDER STATEMENT */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="border-t border-b border-stone-200/80 py-12 sm:py-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             
@@ -89,7 +92,7 @@ export const Home = ({ onEnquire }) => {
       </section>
 
       {/* 3. SCIENTIFIC PILLARS (Clean Numbered Architectural Matrix) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-stone-200/80">
           <div>
             <span className="text-[11px] font-mono tracking-[0.16em] uppercase text-[#686861] font-semibold block mb-1">
@@ -162,7 +165,7 @@ export const Home = ({ onEnquire }) => {
       </section>
 
       {/* 4. CURATED PRODUCT FORMULATIONS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 pb-6 mb-8 border-b border-stone-200/80">
           <div>
             <span className="text-[11px] font-mono tracking-[0.16em] uppercase text-emerald-800 font-semibold block mb-1">
@@ -189,14 +192,14 @@ export const Home = ({ onEnquire }) => {
       </section>
 
       {/* 5. SMART SOLUTION FINDER (WIZARD) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="border border-stone-200/90 bg-white p-6 sm:p-8 shadow-sm">
           <SmartProductFinder onEnquire={onEnquire} />
         </div>
       </section>
 
       {/* 6. SOLUTIONS BY CROP PHENOLOGY */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="bg-[#F2F4EB] border border-stone-200/90 p-7 sm:p-12">
           <div className="max-w-2xl mb-8 space-y-1.5">
             <span className="text-[11px] font-mono tracking-[0.16em] uppercase text-emerald-800 font-semibold block">
@@ -251,7 +254,7 @@ export const Home = ({ onEnquire }) => {
       </section>
 
       {/* 7. EXPERT AGRONOMIC DIAGNOSIS DISPATCH */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="bg-[#183F26] text-white p-7 sm:p-12 border border-stone-800">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center justify-between">
             
@@ -298,7 +301,7 @@ export const Home = ({ onEnquire }) => {
 
       {/* 8. FIELD EXPERIENCES & JOURNAL DISPATCHES (Rendered when verified records exist) */}
       {TESTIMONIALS && TESTIMONIALS.length > 0 && (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="site-container">
           <div className="pb-6 mb-8 border-b border-stone-200/80 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <span className="text-[11px] font-mono tracking-[0.16em] uppercase text-[#686861] font-semibold block mb-1">
@@ -353,7 +356,7 @@ export const Home = ({ onEnquire }) => {
       )}
 
       {/* 9. DISTRIBUTOR / COMMERCIAL PARTNERSHIP (INSTITUTIONAL STRIP) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="site-container">
         <div className="bg-stone-900 text-stone-100 p-7 sm:p-10 border border-stone-800">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center justify-between">
             <div className="lg:col-span-8 space-y-2.5">

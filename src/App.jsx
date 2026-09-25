@@ -54,10 +54,10 @@ function Layout({ children, onOpenSearch, onOpenEnquiry }) {
   }, [location]);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full max-w-full overflow-x-hidden">
       <Header onOpenSearch={onOpenSearch} onOpenEnquiry={onOpenEnquiry} />
       <PageTransition>
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 w-full max-w-full">{children}</main>
       </PageTransition>
       <Footer />
     </div>

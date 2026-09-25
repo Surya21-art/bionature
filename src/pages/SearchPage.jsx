@@ -8,21 +8,24 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { PRODUCTS, CROPS, PROBLEMS, BLOG_POSTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Input } from "@/components/ui/input";
 export const SearchPage = ({ onEnquire }) => {
   const searchParams = new URLSearchParams(useSearch());
   const initialQ = searchParams.get("q") || "";
   const [query, setQuery] = useState(initialQ);
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
   const q = query.trim().toLowerCase();
   const matchingProducts = q
-    ? PRODUCTS.filter(
+    ? allProducts.filter(
         (p) =>
-          p.name.toLowerCase().includes(q) ||
-          p.category.toLowerCase().includes(q) ||
-          p.shortDescription.toLowerCase().includes(q) ||
-          p.suitableCrops.some((c) => c.toLowerCase().includes(q)) ||
-          p.targetProblems.some((pr) => pr.toLowerCase().includes(q)),
+          (p.name || "").toLowerCase().includes(q) ||
+          (p.category || "").toLowerCase().includes(q) ||
+          (p.shortDescription || p.description || "").toLowerCase().includes(q) ||
+          (p.suitableCrops || p.crops || []).some((c) => c.toLowerCase().includes(q)) ||
+          (p.targetProblems || []).some((pr) => pr.toLowerCase().includes(q)),
       )
     : [];
   const matchingCrops = q
@@ -47,7 +50,7 @@ export const SearchPage = ({ onEnquire }) => {
       )
     : [];
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-10">
+    <div className="site-container py-8 sm:py-12 space-y-10">
       {/* Search Input Hero */}
       <div className="bg-[#183F26] text-white p-8 sm:p-10 border border-stone-800 space-y-5 max-w-4xl mx-auto text-center">
         <span className="text-[10px] font-mono tracking-widest uppercase text-[#E7EBDD] px-2 py-0.5 border border-white/20 bg-white/5 inline-block">

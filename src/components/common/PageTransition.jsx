@@ -35,7 +35,7 @@ export const PageTransition = ({ children }) => {
         initial="fadeOut"
         animate="fadeIn"
         exit="fadeOut"
-        className="min-h-screen"
+        className="min-h-screen w-full max-w-full overflow-x-hidden"
       >
         {children}
       </motion.div>

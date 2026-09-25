@@ -17,6 +17,9 @@ import {
   UserCheck,
   ShieldAlert,
   Sparkles,
+  UploadCloud,
+  X,
+  Pencil,
 } from "lucide-react";
 import { useBioNatureStore } from "@/services/store";
 import { CATEGORIES } from "@/data/bionature-data";
@@ -78,6 +81,96 @@ export const Admin = () => {
     useState("Bio Fertilizers");
   const [newProductDesc, setNewProductDesc] = useState("");
   const [newProductDosage, setNewProductDosage] = useState("");
+  const [newProductFormulation, setNewProductFormulation] = useState("Liquid Consortia");
+  const [newProductCrops, setNewProductCrops] = useState("Tomato, Chilli, Paddy, Vegetables");
+  const [newProductPackSizes, setNewProductPackSizes] = useState("500 ml, 1 Liter, 5 Liters");
+  const [newProductImage, setNewProductImage] = useState("");
+  const [imageUploadMode, setImageUploadMode] = useState("file");
+  const [imageFileName, setImageFileName] = useState("");
+  const [isSubmittingProduct, setIsSubmittingProduct] = useState(false);
+
+  const handleProductImageFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image file must be under 10 MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      if (ev.target?.result) {
+        setNewProductImage(ev.target.result);
+        setImageFileName(file.name);
+        toast.success(`Loaded image "${file.name}"`);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleClearProductImage = () => {
+    setNewProductImage("");
+    setImageFileName("");
+  };
+
+  // Edit Product State & Handlers
+  const [editingProduct, setEditingProduct] = useState(null);
+  const [editImageMode, setEditImageMode] = useState("file");
+  const [editImageFileName, setEditImageFileName] = useState("");
+  const [isUpdatingProduct, setIsUpdatingProduct] = useState(false);
+
+  const handleStartEditProduct = (p) => {
+    setEditingProduct({
+      ...p,
+      primaryImage: p.primaryImage || p.images?.[0] || "",
+    });
+    setEditImageMode("file");
+    setEditImageFileName("");
+  };
+
+  const handleEditProductImageFile = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Image file must be under 10 MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      if (ev.target?.result) {
+        setEditingProduct((prev) => ({
+          ...prev,
+          primaryImage: ev.target.result,
+          images: [ev.target.result, ...(prev?.images?.slice(1) || [])],
+        }));
+        setEditImageFileName(file.name);
+        toast.success(`Selected "${file.name}"`);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleSaveProductEdit = async (e) => {
+    e.preventDefault();
+    if (!editingProduct?.name?.trim()) {
+      toast.error("Product name cannot be empty");
+      return;
+    }
+    try {
+      setIsUpdatingProduct(true);
+      await store.saveProduct({
+        ...editingProduct,
+        images: [editingProduct.primaryImage, ...(editingProduct.images?.slice(1) || [])],
+        galleryImages: [editingProduct.primaryImage, ...(editingProduct.galleryImages?.slice(1) || [])],
+      });
+      toast.success(`Updated "${editingProduct.name}" picture and formulation details!`);
+      setEditingProduct(null);
+    } catch (err) {
+      console.error("Error updating product:", err);
+      toast.error(err.message || "Failed to update product");
+    } finally {
+      setIsUpdatingProduct(false);
+    }
+  };
   // Expert Note Response State
   const [selectedDiagnosisId, setSelectedDiagnosisId] = useState(null);
   const [expertNoteText, setExpertNoteText] = useState("");
@@ -211,49 +304,85 @@ export const Admin = () => {
     }
   };
 
-  const handleCreateProduct = (e) => {
+  const handleCreateProduct = async (e) => {
     e.preventDefault();
     if (!newProductName.trim()) {
       toast.error("Product name is required");
       return;
     }
-    const slug = newProductName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const newProd = {
-      id: `prod-${Date.now()}`,
-      name: newProductName,
-      slug,
-      category: newProductCategory,
-      categorySlug: newProductCategory
+    setIsSubmittingProduct(true);
+    try {
+      const slug = newProductName
+        .trim()
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-"),
-      shortDescription:
-        newProductDesc ||
-        "High-potency biological formulation for Indian crops.",
-      description: newProductDesc || "Certified bio-agricultural solution.",
-      benefits: [
-        "Increases nutrient assimilation",
-        "Eco-friendly and 100% residue-free",
-      ],
-      ingredients: "Active biological inoculants",
-      applicationMethod: "Foliar Spray / Drip Irrigation",
-      dosage: newProductDosage || "1 to 2 Liters per acre",
-      packSizes: ["500 ml", "1 Liter", "5 Liters"],
-      images: [
-        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80",
-      ],
-      documents: [
-        { name: "Product Brochure.pdf", type: "PDF", size: "1.2 MB" },
-      ],
-      suitableCrops: ["Tomato", "Chilli", "Paddy", "Vegetables"],
-      targetProblems: ["Nutrient Deficiency", "Soil Health"],
-      published: true,
-    };
-    store.saveProduct(newProd);
-    setShowAddProduct(false);
-    setNewProductName("");
-    setNewProductDesc("");
-    setNewProductDosage("");
-    toast.success("Product created and published to catalog!");
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+
+      const matchedCat = CATEGORIES.find(
+        (c) => c.name.toLowerCase() === newProductCategory.toLowerCase()
+      );
+      const defaultImg =
+        newProductImage.trim() ||
+        matchedCat?.image ||
+        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80";
+
+      const cropsArray = newProductCrops
+        .split(",")
+        .map((c) => c.trim())
+        .filter(Boolean);
+
+      const packSizesArray = newProductPackSizes
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+
+      const newProd = {
+        name: newProductName.trim(),
+        slug,
+        category: newProductCategory,
+        categorySlug: newProductCategory
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-"),
+        shortDescription:
+          newProductDesc.trim() ||
+          "High-potency biological formulation for Indian crops.",
+        description:
+          newProductDesc.trim() || "Certified bio-agricultural solution.",
+        formulation: newProductFormulation.trim() || "Liquid Consortia",
+        benefits: [
+          "Increases nutrient assimilation & root proliferation",
+          "Eco-friendly, chemical-free and 100% residue-free",
+        ],
+        ingredients: "Active biological inoculants & consortia",
+        applicationMethod: "Foliar Spray / Drip Irrigation / Seed Treatment",
+        dosage: newProductDosage.trim() || "1 to 2 Liters per acre",
+        packSizes: packSizesArray.length > 0 ? packSizesArray : ["500 ml", "1 Liter", "5 Liters"],
+        primaryImage: defaultImg,
+        images: [defaultImg],
+        galleryImages: [defaultImg],
+        documents: [
+          { name: "Product Brochure.pdf", type: "PDF", size: "1.2 MB" },
+        ],
+        suitableCrops: cropsArray.length > 0 ? cropsArray : ["Tomato", "Chilli", "Paddy", "Vegetables"],
+        crops: cropsArray.length > 0 ? cropsArray : ["Tomato", "Chilli", "Paddy", "Vegetables"],
+        targetProblems: ["Nutrient Deficiency", "Soil Health"],
+        published: true,
+      };
+
+      await store.createProduct(newProd);
+      setShowAddProduct(false);
+      setNewProductName("");
+      setNewProductDesc("");
+      setNewProductDosage("");
+      setNewProductImage("");
+      setImageFileName("");
+      toast.success(`Formulation '${newProductName}' published to catalog and saved to backend!`);
+    } catch (err) {
+      console.error("Error creating product:", err);
+      toast.error(err.message || "Failed to create product");
+    } finally {
+      setIsSubmittingProduct(false);
+    }
   };
 
   const handleSaveExpertNote = (id) => {
@@ -381,7 +510,7 @@ export const Admin = () => {
 
   // Logged-in Admin Dashboard
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="site-container py-8 space-y-8">
       {/* Top Header Bar */}
       <div className="bg-slate-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg border border-slate-800">
         <div>
@@ -610,9 +739,20 @@ export const Admin = () => {
               onSubmit={handleCreateProduct}
               className="bg-emerald-50/70 p-6 rounded-3xl border border-emerald-200 space-y-4"
             >
-              <h3 className="text-sm font-bold text-emerald-950">
-                Add New Agricultural Formulation
-              </h3>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="text-sm font-bold text-emerald-950">
+                    Add New Agricultural Formulation
+                  </h3>
+                  <p className="text-[11px] text-emerald-800/80">
+                    This will save the formulation to the backend API and update the live catalog.
+                  </p>
+                </div>
+                <Badge variant="outline" className="text-[10px] text-emerald-800 bg-white border-emerald-300">
+                  Backend API Synced
+                </Badge>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
                   <label className="text-xs font-semibold text-slate-700">
@@ -655,6 +795,42 @@ export const Admin = () => {
                 </div>
               </div>
 
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">
+                    Formulation Type
+                  </label>
+                  <Input
+                    value={newProductFormulation}
+                    onChange={(e) => setNewProductFormulation(e.target.value)}
+                    placeholder="e.g. Liquid Consortia / Wettable Powder"
+                    className="text-xs bg-white mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">
+                    Suitable Crops (comma-separated)
+                  </label>
+                  <Input
+                    value={newProductCrops}
+                    onChange={(e) => setNewProductCrops(e.target.value)}
+                    placeholder="e.g. Tomato, Chilli, Paddy, Cotton"
+                    className="text-xs bg-white mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">
+                    Pack Sizes (comma-separated)
+                  </label>
+                  <Input
+                    value={newProductPackSizes}
+                    onChange={(e) => setNewProductPackSizes(e.target.value)}
+                    placeholder="e.g. 500 ml, 1 Liter, 5 Liters"
+                    className="text-xs bg-white mt-1"
+                  />
+                </div>
+              </div>
+
               <div>
                 <label className="text-xs font-semibold text-slate-700">
                   Short Description
@@ -667,19 +843,299 @@ export const Admin = () => {
                 />
               </div>
 
+              <div>
+                <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  Product Image
+                </label>
+                <div className="border border-stone-200/90 rounded-md p-3 bg-stone-50/60 space-y-3">
+                  <div className="flex items-center gap-2 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setImageUploadMode("file")}
+                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                        imageUploadMode === "file"
+                          ? "bg-emerald-700 text-white"
+                          : "bg-white text-stone-600 border border-stone-200 hover:bg-stone-100"
+                      }`}
+                    >
+                      Upload from Computer
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setImageUploadMode("url")}
+                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                        imageUploadMode === "url"
+                          ? "bg-emerald-700 text-white"
+                          : "bg-white text-stone-600 border border-stone-200 hover:bg-stone-100"
+                      }`}
+                    >
+                      Paste Image URL
+                    </button>
+                  </div>
+
+                  {imageUploadMode === "file" ? (
+                    <div>
+                      {newProductImage ? (
+                        <div className="flex items-center gap-3 p-2 bg-white border border-stone-200 rounded">
+                          <img
+                            src={newProductImage}
+                            alt="Preview"
+                            className="w-14 h-14 object-cover rounded border border-stone-200 shrink-0 bg-stone-50"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-medium text-stone-800 truncate">
+                              {imageFileName || "Local Image Selected"}
+                            </p>
+                            <span className="text-[10px] text-emerald-700 font-mono">
+                              Ready for publish (stored in database)
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={handleClearProductImage}
+                            className="p-1.5 text-stone-400 hover:text-red-600 rounded transition-colors"
+                            title="Remove image"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="border-2 border-dashed border-stone-300 hover:border-emerald-600 bg-white rounded-md p-4 flex flex-col items-center justify-center cursor-pointer transition-colors group text-center">
+                          <UploadCloud className="w-6 h-6 text-stone-400 group-hover:text-emerald-700 mb-1.5 transition-colors" />
+                          <span className="text-xs font-medium text-stone-700 group-hover:text-emerald-800">
+                            Click to choose photo from your computer
+                          </span>
+                          <span className="text-[10px] text-stone-500 mt-0.5">
+                            Supports JPG, PNG, WEBP (up to 10MB)
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleProductImageFile}
+                            className="hidden"
+                          />
+                        </label>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Input
+                        value={newProductImage}
+                        onChange={(e) => {
+                          setNewProductImage(e.target.value);
+                          setImageFileName("");
+                        }}
+                        placeholder="e.g. https://... or /products/my-photo.jpg"
+                        className="text-xs bg-white"
+                      />
+                      {newProductImage && (
+                        <div className="flex items-center gap-2 pt-1">
+                          <img
+                            src={newProductImage}
+                            alt="Preview"
+                            className="w-10 h-10 object-cover rounded border border-stone-200 shrink-0"
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                            }}
+                          />
+                          <span className="text-[11px] text-stone-500">
+                            URL preview (leave blank for high-res default)
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
               <div className="flex items-center gap-2 pt-2">
                 <Button
                   type="submit"
                   size="sm"
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs"
+                  disabled={isSubmittingProduct}
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold"
                 >
-                  Save & Publish Product
+                  {isSubmittingProduct ? "Saving to Backend..." : "Save & Publish Formulation"}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   size="sm"
+                  disabled={isSubmittingProduct}
                   onClick={() => setShowAddProduct(false)}
+                  className="text-xs"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          )}
+
+          {/* Edit Product & Picture Modal */}
+          {editingProduct && (
+            <form
+              onSubmit={handleSaveProductEdit}
+              className="bg-white p-6 rounded-3xl border-2 border-emerald-600 shadow-md space-y-4"
+            >
+              <div className="flex items-center justify-between pb-3 border-b border-stone-200">
+                <div>
+                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <Pencil className="w-4 h-4 text-emerald-700" />
+                    Edit Formulation &amp; Picture: {editingProduct.name}
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    Upload a new picture from your computer or update web URL, dosage, and details.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setEditingProduct(null)}
+                  className="p-1 text-stone-400 hover:text-stone-700 rounded"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Product Picture Upload/Change Area */}
+              <div>
+                <label className="text-xs font-semibold text-slate-700 block mb-1">
+                  Product Picture
+                </label>
+                <div className="border border-stone-200 rounded-md p-3 bg-stone-50/60 space-y-3">
+                  <div className="flex items-center gap-2 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setEditImageMode("file")}
+                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                        editImageMode === "file"
+                          ? "bg-emerald-700 text-white"
+                          : "bg-white text-stone-600 border border-stone-200 hover:bg-stone-100"
+                      }`}
+                    >
+                      Upload from Computer
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditImageMode("url")}
+                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
+                        editImageMode === "url"
+                          ? "bg-emerald-700 text-white"
+                          : "bg-white text-stone-600 border border-stone-200 hover:bg-stone-100"
+                      }`}
+                    >
+                      Paste Image URL
+                    </button>
+                  </div>
+
+                  {/* Current/New Image Preview */}
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-3 bg-white border border-stone-200 rounded-md">
+                    <div className="w-20 h-20 rounded border border-stone-200 overflow-hidden bg-stone-100 shrink-0">
+                      <img
+                        src={editingProduct.primaryImage || "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"}
+                        alt="Product preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80";
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <p className="text-xs font-semibold text-slate-800">
+                        {editImageFileName || "Current Formulation Picture"}
+                      </p>
+                      {editImageMode === "file" ? (
+                        <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded text-xs font-medium cursor-pointer transition-colors">
+                          <UploadCloud className="w-3.5 h-3.5" />
+                          <span>Choose New Picture from Computer</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleEditProductImageFile}
+                            className="hidden"
+                          />
+                        </label>
+                      ) : (
+                        <Input
+                          value={editingProduct.primaryImage || ""}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setEditingProduct((prev) => ({
+                              ...prev,
+                              primaryImage: val,
+                            }));
+                            setEditImageFileName("");
+                          }}
+                          placeholder="e.g. https://... or /products/my-photo.jpg"
+                          className="text-xs bg-white h-8"
+                        />
+                      )}
+                      <p className="text-[10px] text-stone-500">
+                        Supports JPG, PNG, WEBP (saved to database &amp; live catalog)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Other Fields: Name, Category, Dosage, Description */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">Product Name</label>
+                  <Input
+                    value={editingProduct.name || ""}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
+                    className="text-xs bg-white mt-1"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">Category</label>
+                  <select
+                    value={editingProduct.category || CATEGORIES[0].name}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, category: e.target.value })}
+                    className="w-full h-9 rounded-md border border-input bg-white px-3 py-1 text-xs shadow-sm focus:outline-none mt-1"
+                  >
+                    {CATEGORIES.map((c) => (
+                      <option key={c.id} value={c.name}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-slate-700">Dosage per Acre</label>
+                  <Input
+                    value={editingProduct.dosage || ""}
+                    onChange={(e) => setEditingProduct({ ...editingProduct, dosage: e.target.value })}
+                    className="text-xs bg-white mt-1"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-700">Description</label>
+                <Textarea
+                  value={editingProduct.description || ""}
+                  onChange={(e) => setEditingProduct({ ...editingProduct, description: e.target.value })}
+                  className="text-xs bg-white mt-1 min-h-[60px]"
+                />
+              </div>
+
+              <div className="flex items-center gap-2 pt-2">
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={isUpdatingProduct}
+                  className="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold"
+                >
+                  {isUpdatingProduct ? "Saving Changes..." : "Save Picture & Details"}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  disabled={isUpdatingProduct}
+                  onClick={() => setEditingProduct(null)}
                   className="text-xs"
                 >
                   Cancel
@@ -693,6 +1149,7 @@ export const Admin = () => {
             <table className="w-full text-left text-xs">
               <thead className="bg-slate-50 text-slate-700 font-bold border-b">
                 <tr>
+                  <th className="p-4 w-16">Picture</th>
                   <th className="p-4">Product Name</th>
                   <th className="p-4">Category</th>
                   <th className="p-4">Dosage per Acre</th>
@@ -701,36 +1158,83 @@ export const Admin = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
-                {products.map((p) => (
-                  <tr key={p.id} className="hover:bg-slate-50/50">
-                    <td className="p-4 font-bold text-slate-900">{p.name}</td>
-                    <td className="p-4">{p.category}</td>
-                    <td className="p-4 font-mono text-[11px]">{p.dosage}</td>
-                    <td className="p-4">
-                      <Badge
-                        variant="outline"
-                        className="text-[10px] text-emerald-800 bg-emerald-50"
-                      >
-                        {p.published ? "Published" : "Draft"}
-                      </Badge>
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => {
-                          if (confirm(`Delete ${p.name}?`)) {
-                            store.deleteProduct(p.id);
-                            toast.success("Product removed");
-                          }
-                        }}
-                        className="text-red-600 hover:bg-red-50 p-1 h-8"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {products.map((p) => {
+                  const img = p.primaryImage || p.images?.[0];
+                  return (
+                    <tr key={p.id} className="hover:bg-slate-50/50">
+                      <td className="p-4">
+                        <div className="w-10 h-10 rounded border border-stone-200 overflow-hidden bg-stone-100 relative shrink-0">
+                          {img ? (
+                            <img
+                              src={img}
+                              alt={p.name}
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.currentTarget.src = "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80";
+                              }}
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-stone-400">
+                              <Package className="w-4 h-4" />
+                            </div>
+                          )}
+                        </div>
+                      </td>
+                      <td className="p-4 font-bold text-slate-900">{p.name}</td>
+                      <td className="p-4">{p.category}</td>
+                      <td className="p-4 font-mono text-[11px]">{p.dosage}</td>
+                      <td className="p-4">
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] text-emerald-800 bg-emerald-50"
+                        >
+                          {p.published ? "Published" : "Draft"}
+                        </Badge>
+                      </td>
+                      <td className="p-4 text-right">
+                        <div className="flex items-center justify-end gap-1">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            title="Edit product picture & details"
+                            onClick={() => handleStartEditProduct(p)}
+                            className="text-emerald-700 hover:bg-emerald-50 p-1 h-8 w-8"
+                          >
+                            <Pencil className="w-3.5 h-3.5" />
+                          </Button>
+                          <Link href={`/product/${p.slug}`} target="_blank">
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              title="View product in catalog"
+                              className="text-stone-600 hover:bg-stone-100 p-1 h-8 w-8"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </Button>
+                          </Link>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            title="Delete product"
+                            onClick={async () => {
+                              if (confirm(`Delete '${p.name}' from catalog and backend database?`)) {
+                                try {
+                                  await store.deleteProduct(p.id);
+                                  toast.success(`Product '${p.name}' removed`);
+                                } catch (err) {
+                                  toast.error(err.message || "Failed to delete product");
+                                }
+                              }
+                            }}
+                            className="text-red-600 hover:bg-red-50 p-1 h-8 w-8"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

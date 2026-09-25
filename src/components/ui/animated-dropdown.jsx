@@ -38,7 +38,7 @@ export const AnimatedDropdown = ({
       {/* Trigger Button */}
       <button
         type="button"
-        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-sm whitespace-nowrap shrink-0 text-stone-700 hover:text-emerald-900 transition-colors duration-150 outline-none ${
+        className={`flex items-center gap-1 xl:gap-1.5 px-2 py-1 xl:px-2.5 xl:py-1.5 rounded-sm whitespace-nowrap shrink-0 text-stone-700 hover:text-emerald-900 transition-colors duration-150 outline-none ${
           isActive || isOpen ? "text-emerald-900 font-semibold" : ""
         }`}
         onClick={() => setIsOpen(!isOpen)}
@@ -57,7 +57,7 @@ export const AnimatedDropdown = ({
           className={`absolute top-full pt-1.5 ${getAlignmentClass()} z-50`}
         >
           <div
-            className={`bg-white border border-stone-200/95 shadow-lg p-1.5 min-w-[260px] rounded-sm transition-opacity duration-150 ${contentClassName}`}
+            className={`bg-white border border-stone-200/95 shadow-lg p-1.5 min-w-[240px] max-w-[calc(100vw-32px)] rounded-sm transition-opacity duration-150 ${contentClassName}`}
           >
             <div className="space-y-0.5">
               {items.map((item, index) => (

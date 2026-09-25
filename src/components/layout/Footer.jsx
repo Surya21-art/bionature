@@ -16,7 +16,7 @@ export const Footer = () => {
     <footer className="bg-[#121A14] text-stone-300 border-t border-[#233527]">
       {/* Trust & Certifications Strip */}
       <div className="border-b border-[#233527] bg-[#162219] py-6 px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
+        <div className="site-container grid grid-cols-2 md:grid-cols-4 gap-6 text-center md:text-left">
           <div className="flex items-center gap-3 justify-center md:justify-start">
             <div className="w-8 h-8 rounded-sm bg-[#1A2A1E] border border-[#2B4030] flex items-center justify-center text-[#8AA891] shrink-0">
               <ShieldCheck className="w-4 h-4" />
@@ -74,7 +74,7 @@ export const Footer = () => {
       </div>
 
       {/* Main Footer Links */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <div className="site-container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
           {/* Brand & About */}
           <div className="lg:col-span-2 space-y-4">
@@ -278,7 +278,7 @@ export const Footer = () => {
 
       {/* Bottom Copyright and Legal Bar */}
       <div className="border-t border-[#1C2C20] bg-[#0D140F] py-4 px-4 text-[11px] font-mono text-stone-500 uppercase tracking-wider">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="site-container flex flex-col sm:flex-row items-center justify-between gap-4">
           <p>
             &copy; {new Date().getFullYear()} BioNature India Pvt Ltd. All rights
             reserved.

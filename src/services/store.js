@@ -142,8 +142,25 @@ export const BioNatureStore = {
         api.getDistributors(),
       ]);
 
-      if (prods.status === "fulfilled" && prods.value.length > 0) {
-        setLocal(STORAGE_KEYS.PRODUCTS, prods.value);
+      if (prods.status === "fulfilled" && Array.isArray(prods.value) && prods.value.length > 0) {
+        const currentLocal = getLocal(STORAGE_KEYS.PRODUCTS, []);
+        const mergedMap = new Map();
+        // Server products first
+        for (const p of prods.value) {
+          if (p && (p.id || p.slug)) {
+            mergedMap.set(p.slug || p.id, p);
+          }
+        }
+        // Preserve any locally added/edited products not yet returned by server
+        for (const p of currentLocal) {
+          if (p && (p.id || p.slug)) {
+            const key = p.slug || p.id;
+            if (!mergedMap.has(key)) {
+              mergedMap.set(key, p);
+            }
+          }
+        }
+        setLocal(STORAGE_KEYS.PRODUCTS, Array.from(mergedMap.values()));
       }
       if (enqs.status === "fulfilled" && enqs.value.length > 0) {
         setLocal(STORAGE_KEYS.ENQUIRIES, enqs.value);
@@ -162,59 +179,94 @@ export const BioNatureStore = {
   // Products
   getProducts() {
     const local = getLocal(STORAGE_KEYS.PRODUCTS, null);
-    if (!local || !Array.isArray(local)) return PRODUCTS;
-    return PRODUCTS.map((p) => {
-      const found = local.find((l) => l.slug === p.slug || l.id === p.id);
-      return found
-        ? {
-            ...found,
-            ...p,
-            specifications: { ...found.specifications, ...p.specifications },
-            application: p.application || found.application,
-            crops: p.crops || found.crops,
-            gallery: p.gallery || found.gallery,
-            galleryImages: p.galleryImages || found.galleryImages,
-            primaryImage: p.primaryImage || found.primaryImage,
-          }
-        : p;
+    if (!local || !Array.isArray(local) || local.length === 0) return PRODUCTS;
+
+    return local.map((item) => {
+      const base = PRODUCTS.find((p) => p.slug === item.slug || p.id === item.id);
+      if (!base) return item;
+      return {
+        ...base,
+        ...item,
+        specifications: { ...(base.specifications || {}), ...(item.specifications || {}) },
+        application: item.application || base.application,
+        crops: item.crops || base.crops,
+        gallery: item.gallery || base.gallery,
+        galleryImages: item.galleryImages || base.galleryImages,
+        primaryImage: item.primaryImage || base.primaryImage,
+      };
     });
   },
   getProductBySlug(slug) {
+    if (!slug) return null;
+    const clean = slug.toLowerCase();
     const all = this.getProducts();
-    return all.find((p) => p.slug === slug);
+    return all.find((p) => (p.slug && p.slug.toLowerCase() === clean) || p.id === slug);
+  },
+  async createProduct(product) {
+    const currentProducts = this.getProducts();
+    const tempId = product.id || `prod-${Date.now()}`;
+    const slug =
+      product.slug ||
+      (product.name || "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "") ||
+      `prod-${Date.now()}`;
+
+    const newProd = {
+      ...product,
+      id: tempId,
+      slug,
+      published: product.published !== undefined ? product.published : true,
+      createdAt: new Date().toISOString(),
+    };
+
+    // Prepend to local products list for immediate optimistic UI update
+    const updatedList = [newProd, ...currentProducts.filter((p) => p.id !== tempId && p.slug !== slug)];
+    setLocal(STORAGE_KEYS.PRODUCTS, updatedList);
+
+    // Call backend API to persist
+    try {
+      const serverProduct = await api.createProduct(newProd);
+      if (serverProduct && (serverProduct.id || serverProduct.slug)) {
+        const fresh = this.getProducts();
+        const idx = fresh.findIndex((p) => p.id === tempId || p.slug === slug);
+        if (idx >= 0) {
+          fresh[idx] = { ...newProd, ...serverProduct };
+          setLocal(STORAGE_KEYS.PRODUCTS, [...fresh]);
+        }
+        return serverProduct;
+      }
+    } catch (e) {
+      console.warn("Backend createProduct warning:", e.message);
+    }
+    return newProd;
   },
   async saveProduct(product) {
     const products = this.getProducts();
     const index = products.findIndex(
-      (p) => p.id === product.id || p.slug === product.slug,
+      (p) => p.id === product.id || (product.slug && p.slug === product.slug),
     );
     if (index >= 0) {
-      products[index] = product;
-    } else {
-      products.unshift(product);
-    }
-    setLocal(STORAGE_KEYS.PRODUCTS, products);
+      const updated = { ...products[index], ...product };
+      products[index] = updated;
+      setLocal(STORAGE_KEYS.PRODUCTS, products);
 
-    // Call API in background
-    try {
-      if (product.id && !product.id.startsWith("temp-")) {
-        await api.updateProduct(product.id, product);
-      } else {
-        const saved = await api.createProduct(product);
-        if (saved && saved.id) {
-          const idx = products.findIndex((p) => p.slug === product.slug);
-          if (idx >= 0) {
-            products[idx] = saved;
-            setLocal(STORAGE_KEYS.PRODUCTS, [...products]);
-          }
-        }
+      // Call API in background
+      try {
+        const targetId = updated.id || updated.slug;
+        await api.updateProduct(targetId, updated);
+      } catch (e) {
+        console.warn("Backend saveProduct sync warning:", e.message);
       }
-    } catch (e) {
-      console.warn("Backend saveProduct sync warning:", e.message);
+      return updated;
+    } else {
+      // New product -> delegate to createProduct
+      return this.createProduct(product);
     }
   },
   async deleteProduct(id) {
-    const products = this.getProducts().filter((p) => p.id !== id);
+    const products = this.getProducts().filter((p) => p.id !== id && p.slug !== id);
     setLocal(STORAGE_KEYS.PRODUCTS, products);
     try {
       await api.deleteProduct(id);

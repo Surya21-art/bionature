@@ -2,20 +2,26 @@ import React from "react";
 import { useRoute, Link } from "wouter";
 import { Sprout, ArrowLeft, Calendar, CheckCircle2 } from "lucide-react";
 import { CROPS, PRODUCTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
 export const CropSolutions = ({ onEnquire }) => {
   const [, params] = useRoute("/solutions/crops/:crop");
   const cropParam = params?.crop?.toLowerCase() || "tomato";
+  const { products: storeProducts } = useBioNatureStore();
+  const allProducts = Array.isArray(storeProducts) && storeProducts.length > 0 ? storeProducts : PRODUCTS;
+
   const currentCrop =
     CROPS.find(
       (c) => c.slug === cropParam || c.name.toLowerCase() === cropParam,
     ) || CROPS[0];
-  const matchedProducts = PRODUCTS.filter((p) =>
-    p.suitableCrops.includes(currentCrop.name),
+  const matchedProducts = allProducts.filter((p) =>
+    (p.suitableCrops || p.crops || []).some(
+      (c) => c.toLowerCase() === currentCrop.name.toLowerCase()
+    ),
   );
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-12">
+    <div className="site-container py-8 sm:py-12 space-y-12">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-xs text-slate-500">
         <Link

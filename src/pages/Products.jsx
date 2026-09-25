@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import { useSearch, useLocation, Link } from "wouter";
 import { Search, Filter, X, RotateCcw, Sprout, ArrowRight } from "lucide-react";
 import { CATEGORIES, CROPS, PROBLEMS, PRODUCTS } from "@/data/bionature-data";
+import { useBioNatureStore } from "@/services/store";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,13 @@ export const Products = ({ onEnquire }) => {
   const [, setLocation] = useLocation();
   const searchParams = new URLSearchParams(useSearch());
   const initialCategory = searchParams.get("category") || "all";
+  const { products: storeProducts } = useBioNatureStore();
+
+  const allCatalogProducts = useMemo(() => {
+    return Array.isArray(storeProducts) && storeProducts.length > 0
+      ? storeProducts
+      : PRODUCTS;
+  }, [storeProducts]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
@@ -45,7 +53,10 @@ export const Products = ({ onEnquire }) => {
     { id: "micronutrients", name: "Micronutrients" },
     { id: "bio-pesticides", name: "Bio-Pesticides" },
     { id: "bio-fungicides", name: "Bio-Fungicides" },
-    { id: "soil-conditioners", name: "Soil Conditioners" },
+    { id: "soil-conditioners", name: "Soil Health & Conditioners" },
+    { id: "plant-nutrition", name: "Plant Nutrition" },
+    { id: "crop-protection", name: "Crop Protection" },
+    { id: "seaweed-products", name: "Seaweed Products" },
     { id: "specialty-formulations", name: "Specialty Formulations" },
   ];
 
@@ -64,7 +75,7 @@ export const Products = ({ onEnquire }) => {
 
   // Filter & Sort Logic
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
+    return allCatalogProducts.filter((p) => {
       // 1. Search Query (matches Name, Category, Formulation, Crop, Description, Benefit, Problems)
       if (searchQuery.trim()) {
         const q = searchQuery.trim().toLowerCase();
@@ -95,27 +106,42 @@ export const Products = ({ onEnquire }) => {
         }
       }
 
-      // 2. Category Filter
+      // 2. Category Filter (supports aliases, singular/plural, hyphens)
       if (selectedCategory !== "all") {
-        const targetNorm = normalize(selectedCategory);
-        const prodCatNorm = normalize(p.category);
-        const prodCatSlugNorm = normalize(p.categorySlug);
+        const targetNorm = normalize(selectedCategory).replace(/s$/, "");
+        const prodCatNorm = normalize(p.category).replace(/s$/, "");
+        const prodCatSlugNorm = normalize(p.categorySlug).replace(/s$/, "");
 
-        if (prodCatNorm !== targetNorm && prodCatSlugNorm !== targetNorm) {
+        const isDirect =
+          prodCatNorm === targetNorm ||
+          prodCatSlugNorm === targetNorm ||
+          prodCatNorm.includes(targetNorm) ||
+          targetNorm.includes(prodCatNorm);
+
+        const isSoilMatch =
+          targetNorm.includes("soil") &&
+          (prodCatNorm.includes("soil") || prodCatSlugNorm.includes("soil"));
+        const isSpecialtyMatch =
+          targetNorm.includes("special") &&
+          (prodCatNorm.includes("special") || prodCatSlugNorm.includes("special"));
+
+        if (!isDirect && !isSoilMatch && !isSpecialtyMatch) {
           return false;
         }
       }
 
       // 3. Crop Filter
       if (selectedCrop !== "all") {
-        if (!p.suitableCrops || !p.suitableCrops.includes(selectedCrop)) {
+        const cropArr = p.suitableCrops || p.crops || [];
+        if (!cropArr.some((c) => normalize(c) === normalize(selectedCrop))) {
           return false;
         }
       }
 
       // 4. Problem Filter
       if (selectedProblem !== "all") {
-        if (!p.targetProblems || !p.targetProblems.includes(selectedProblem)) {
+        const probArr = p.targetProblems || [];
+        if (!probArr.some((pr) => normalize(pr) === normalize(selectedProblem))) {
           return false;
         }
       }
@@ -127,7 +153,7 @@ export const Products = ({ onEnquire }) => {
       // Default: featured first
       return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
     });
-  }, [searchQuery, selectedCategory, selectedCrop, selectedProblem, sortBy]);
+  }, [allCatalogProducts, searchQuery, selectedCategory, selectedCrop, selectedProblem, sortBy]);
 
   const handleResetFilters = () => {
     setSearchQuery("");
@@ -146,10 +172,10 @@ export const Products = ({ onEnquire }) => {
 
   return (
     <div className="bg-[#F7F6F1] min-h-screen pt-6 pb-14 sm:pt-8 sm:pb-20 text-[#242421] selection:bg-[#183F26] selection:text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5 sm:space-y-6">
+      <div className="site-container space-y-5 sm:space-y-6">
 
         {/* 1. REFINED COMPACT HERO WITH CORRECT TOP OFFSET & ANCHOR SCROLL MARGIN */}
-        <div id="formulations-hero" className="scroll-mt-24 sm:scroll-mt-28 bg-[#183F26] text-white py-4 px-5 sm:py-5 sm:px-8 border border-stone-800">
+        <div id="formulations-hero" className="scroll-mt-24 sm:scroll-mt-28 bg-[#183F26] text-white py-4 px-5 sm:py-5 sm:px-8 border border-stone-800 w-full max-w-full">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 sm:gap-4">
             <div className="space-y-1.5 max-w-2xl">
               {/* User requirement 3: Exactly "BIOLOGICAL FORMULATIONS" */}
@@ -171,10 +197,10 @@ export const Products = ({ onEnquire }) => {
         </div>
 
         {/* 2. MAIN LAYOUT: FILTER SIDEBAR + PRODUCT GRID */}
-        <div id="formulations-catalog" className="scroll-mt-24 sm:scroll-mt-28 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-7 items-start">
+        <div id="formulations-catalog" className="scroll-mt-24 sm:scroll-mt-28 products-layout items-start">
 
-          {/* Desktop Filter Sidebar (3 of 12 columns) with proper sticky offset */}
-          <aside className="hidden lg:block lg:col-span-3 space-y-6 sticky top-24">
+          {/* Desktop Filter Sidebar with proper sticky offset */}
+          <aside className="hidden lg:block space-y-6 sticky top-24 min-w-0">
             <div className="bg-white p-5 border border-stone-200/90 space-y-5">
               
               {/* Sidebar Header */}
@@ -204,7 +230,7 @@ export const Products = ({ onEnquire }) => {
                 <div className="space-y-0.5 text-xs font-sans">
                   {SIDEBAR_CATEGORIES.filter((cat) => {
                     if (cat.id === "all") return true;
-                    const count = PRODUCTS.filter(
+                    const count = allCatalogProducts.filter(
                       (p) =>
                         normalize(p.category) === normalize(cat.id) ||
                         normalize(p.categorySlug) === normalize(cat.id)
@@ -218,8 +244,8 @@ export const Products = ({ onEnquire }) => {
 
                     // Count products matching this category
                     const count = isAll
-                      ? PRODUCTS.length
-                      : PRODUCTS.filter(
+                      ? allCatalogProducts.length
+                      : allCatalogProducts.filter(
                           (p) =>
                             normalize(p.category) === normalize(cat.id) ||
                             normalize(p.categorySlug) === normalize(cat.id)
@@ -304,14 +330,14 @@ export const Products = ({ onEnquire }) => {
             </div>
           </aside>
 
-          {/* Product Grid Area (9 of 12 columns) */}
-          <main className="lg:col-span-9 space-y-5">
+          {/* Product Grid Area */}
+          <main className="min-w-0 space-y-5">
 
             {/* Top Bar: Search Input, Mobile Filter Button, Sort Dropdown */}
-            <div className="bg-white p-3.5 sm:p-4 border border-stone-200/90 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="search-toolbar bg-white p-3.5 sm:p-4 border border-stone-200/90">
               
               {/* Search Field */}
-              <div className="relative w-full sm:w-80">
+              <div className="search-wrapper relative w-full sm:w-80">
                 <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <Input
                   value={searchQuery}
@@ -331,7 +357,7 @@ export const Products = ({ onEnquire }) => {
               </div>
 
               {/* Sort & Mobile Filter Toggle */}
-              <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="sort-wrapper flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
                 <Button
                   variant="outline"
                   size="sm"
@@ -437,7 +463,7 @@ export const Products = ({ onEnquire }) => {
 
             {/* Product Cards Grid - Primary Focus of the Page */}
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+              <div className="product-grid gap-5 sm:gap-6">
                 {filteredProducts.map((product) => (
                   <ProductCard
                     key={product.id}
@@ -496,7 +522,7 @@ export const Products = ({ onEnquire }) => {
                 <div className="space-y-1">
                   {SIDEBAR_CATEGORIES.filter((cat) => {
                     if (cat.id === "all") return true;
-                    const count = PRODUCTS.filter(
+                    const count = allCatalogProducts.filter(
                       (p) =>
                         normalize(p.category) === normalize(cat.id) ||
                         normalize(p.categorySlug) === normalize(cat.id)

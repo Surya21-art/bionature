@@ -5,7 +5,7 @@ import {
   ArrowRight,
   ShieldCheck,
 } from "lucide-react";
-import { PRODUCTS, COMPANY_INFO } from "@/data/bionature-data";
+import { PRODUCTS, COMPANY_INFO, CATEGORIES } from "@/data/bionature-data";
 import { useBioNatureStore } from "@/services/store";
 import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/products/ProductCard";
@@ -32,10 +32,10 @@ export const ProductDetails = ({ onEnquire }) => {
 
   const { products } = useBioNatureStore();
 
-  // Find product from static verified catalog or store
+  // Find product from store or static verified catalog
   const product =
-    PRODUCTS.find((p) => p.slug === slug) ||
-    products.find((p) => p.slug === slug);
+    products.find((p) => p.slug === slug || p.id === slug) ||
+    PRODUCTS.find((p) => p.slug === slug || p.id === slug);
 
   // Configured primary image (default main image)
   const defaultImage =
@@ -90,13 +90,22 @@ export const ProductDetails = ({ onEnquire }) => {
     );
   }
 
+  const matchedCat = CATEGORIES.find(
+    (c) => c.name.toLowerCase() === (product.category || "").toLowerCase()
+  );
+  const fallbackCatImage =
+    matchedCat?.image ||
+    "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80";
+
   // Gallery images explicitly derived from product data
   const galleryImages =
     Array.isArray(product.galleryImages) && product.galleryImages.length > 0
       ? product.galleryImages
       : Array.isArray(product.images) && product.images.length > 0
       ? product.images
-      : [defaultImage];
+      : product.primaryImage
+      ? [product.primaryImage]
+      : [fallbackCatImage];
 
   // Category formatting
   const rawCat = product.category || "Bio Fertilizers";
@@ -206,8 +215,8 @@ export const ProductDetails = ({ onEnquire }) => {
       ? relatedSlugs
           .map(
             (relSlug) =>
-              PRODUCTS.find((p) => p.slug === relSlug) ||
-              products.find((p) => p.slug === relSlug),
+              products.find((p) => p.slug === relSlug || p.id === relSlug) ||
+              PRODUCTS.find((p) => p.slug === relSlug || p.id === relSlug),
           )
           .filter(Boolean)
       : products.filter((p) => p.slug !== product.slug)
@@ -215,7 +224,7 @@ export const ProductDetails = ({ onEnquire }) => {
 
   return (
     <div className="bg-[#F7F6F1] text-[#242421] min-h-screen py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12 sm:space-y-16">
+      <div className="site-container space-y-12 sm:space-y-16">
         
         {/* ==================================================
             1. BREADCRUMBS
@@ -253,11 +262,11 @@ export const ProductDetails = ({ onEnquire }) => {
         {/* ==================================================
             2. PRODUCT DETAIL HERO (Balanced Two-Column Composition)
             ================================================== */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <section className="product-detail-grid items-start">
           
           {/* LEFT: Balanced product image + Subtle thumbnail gallery */}
-          <div className="lg:col-span-6 space-y-3">
-            <div className="relative aspect-[16/11] max-h-[280px] sm:max-h-[360px] lg:max-h-[400px] bg-stone-100 border border-stone-200/90 overflow-hidden">
+          <div className="space-y-3 min-w-0">
+            <div className="product-image relative aspect-[16/11] max-h-[280px] sm:max-h-[360px] lg:max-h-[400px] bg-stone-100 border border-stone-200/90 overflow-hidden w-full max-w-full">
               <img
                 src={currentImage}
                 alt={product.name}
@@ -295,7 +304,7 @@ export const ProductDetails = ({ onEnquire }) => {
           </div>
 
           {/* RIGHT: Product Category, Name, Short Description, Specs Strip & CTAs */}
-          <div className="lg:col-span-6 space-y-6 flex flex-col justify-center">
+          <div className="space-y-6 flex flex-col justify-center min-w-0">
             <div className="space-y-2">
               <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#245B35] font-semibold block">
                 {categoryLabel}
@@ -567,7 +576,7 @@ export const ProductDetails = ({ onEnquire }) => {
               </h2>
             </div>
 
-            <div className="border border-stone-200/90 overflow-x-auto bg-white">
+            <div className="table-wrapper border border-stone-200/90 overflow-x-auto bg-white w-full max-w-full">
               <table className="w-full text-left text-xs min-w-[640px]">
                 <thead className="bg-[#F1F3EC] text-[#242421] font-mono text-[11px] uppercase tracking-wider border-b border-stone-200/90">
                   <tr>

@@ -38,7 +38,7 @@ const TIMELINE = [
 export const About = () => {
   return (
     <div className="bg-[#F7F6F1] text-[#242421] min-h-screen py-10 sm:py-16 space-y-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <div className="site-container space-y-16">
         
         {/* Editorial Hero Banner */}
         <div className="bg-[#183F26] text-white p-8 sm:p-14 border border-stone-800">

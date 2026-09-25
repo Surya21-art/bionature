@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 export const EditorialHero = ({ onEnquire }) => {
   return (
     <section className="relative bg-[#F7F6F1] border-b border-stone-200/70 pt-6 pb-14 lg:pt-10 lg:pb-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="site-container">
         
         {/* Subtle, Simplified Top Breadcrumb Bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 pb-4 mb-8 border-b border-stone-200/70 text-xs text-stone-500">
